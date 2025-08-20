@@ -1,0 +1,11 @@
+comercio padaria
+1- o programa tem que rodar em loop infinito ate ser parado
+2- cliente pedir um tipo de pão (frances, doce, forma, australiano)
+3- cada pao tera uma quantidade 
+4- valor do pao 
+5- pedir forma de pagamento (dinheiro, cartao)
+6- forma de entrega 
+7- dados do cliente (se for entrega)
+8-valor do frete por bairro
+9- nome da atendente
+10- codigo da entrega
