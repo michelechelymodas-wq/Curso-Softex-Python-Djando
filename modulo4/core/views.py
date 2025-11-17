@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Tarefa
-from .models import Execucao
 from .forms import TarefaForm
 
 
@@ -27,8 +26,8 @@ def home(request):
     todas_as_tarefas = Tarefa.objects.all().order_by('-criada_em') # Ordena pelas mais novas
 # 9. Atualize o contexto para incluir o formulário
     context = {
-        'nome_usuario': 'Júnior',
-        'tecnologias': ['Python', 'Django', 'Models', 'Forms'],
+        'nome_usuario': 'Michele',
+        'tecnologias': ['Python', 'Django', 'Html', 'Css'],
         'tarefas': todas_as_tarefas,
         'form': form, # 10. Envie o 'form' (vazio ou com erros) para o template
     }
@@ -39,7 +38,7 @@ def home(request):
     
     #return HttpResponse("<h1>Olá, Mundo! Esta é minha primeira página Django!</h1>")
     context = { 
-        'nome_usuario': 'Júnior', 
+        'nome_usuario': 'Michele', 
         'tecnologias': ['Python', 'Django', 'HTML', 'CSS'],
         "tarefas": todas_as_tarefas,
         "execucoes": todas_as_tarefas,
@@ -51,4 +50,31 @@ def home(request):
 #def inicio(request):
     return HttpResponse("<h1>Olá, Mundo! Esta é minha segunda página Django, que alegria!</h1>")
 
-   
+def concluir_tarefa(request, pk):     
+
+    # 1. Busca a tarefa pela 'pk' (ID) vinda da URL.      
+    # Se não achar, retorna um erro 404.     
+    tarefa = get_object_or_404(Tarefa, pk=pk)   
+
+    # 2. Segurança: Apenas execute se o método for POST     
+    if request.method == 'POST':         
+        # 3. A Lógica de "Update"         
+        tarefa.concluida = True         
+        tarefa.save() # Não se esqueça de salvar!                  
+    
+        # 4. Redireciona de volta para a 'home' (Padrão PRG)         
+        return redirect('home')  
+
+
+def deletar_tarefa(request, pk):     
+    # 1. Busca a tarefa     
+    tarefa = get_object_or_404(Tarefa, pk=pk)     
+
+    # 2. Segurança: Apenas execute se o método for POST     
+    if request.method == 'POST':      
+        # 3. A Lógica de "Delete"        
+        tarefa.delete()          
+
+        # 4. Redireciona de volta para a 'home'         
+        return redirect('home')
+    
