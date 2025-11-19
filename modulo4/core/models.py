@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Cada classe aqui é "traduzida" para uma tabela no banco de dados
 class Tarefa(models.Model):
 # Um campo de texto curto, com máximo de 200 caracteres
+    
     titulo = models.CharField(max_length=200)
     # Um campo booleano (verdadeiro/falso), que por padrão é Falso
     concluida = models.BooleanField(default=False)
@@ -13,17 +15,9 @@ class Tarefa(models.Model):
     # Ele diz ao Django como "chamar" um objeto Tarefa.
     # Em vez de "Tarefa object (1)", ele mostrará o título da tarefa.
     # Isso é EXTREMAMENTE útil no painel de administração.
-    def __str__(self):
-     return self.titulo
-
-class Execucao(models.Model):
-    
-    Nome =  models.CharField(max_length=200)
-    local = models.DateTimeField(auto_now_add=True)
-    hora = models.DateTimeField(auto_now_add=True)
-    concluida = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-     return self.titulo
+        return self.titulo
 
 
