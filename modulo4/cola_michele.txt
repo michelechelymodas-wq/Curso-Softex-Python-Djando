@@ -10,7 +10,7 @@ pip install -r .\requirements.txt
 pip freeze ou pip list   
     #para verificar se o Django e outras aplicações já estão instaladas
 
-cd modulo_4
+cd modulo4
     #acessa a pasta
 
 python manage.py makemigrations   
@@ -24,3 +24,6 @@ python manage.py runserver
 
 http://127.0.0.1:8000
     #url para acessar o servidor
+
+py manage.py createsuperuser
+para criar login e senha do super adm    
