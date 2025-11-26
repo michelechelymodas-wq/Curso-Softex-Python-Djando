@@ -8,7 +8,7 @@ from .forms import TarefaForm
 @login_required
 def home(request):
     if request.method == 'POST':
-        form = TarefaForm(request.POST)
+        form = TarefaForm(request.POST, user=request.user)
 
         if form.is_valid():
             tarefa = form.save(commit=False) 
@@ -24,7 +24,7 @@ def home(request):
 # o 'form' (com os erros) será enviado para o template
 # 7. Lógica de GET: Se o usuário apenas visitou a página
     else:
-        form = TarefaForm() # Cria um formulário vazio
+        form = TarefaForm( user=request.user) # Cria um formulário vazio
 # 8. A busca de dados (fora dos 'ifs', pois é necessária sempre)
     todas_as_tarefas = Tarefa.objects.filter(user=request.user).all().order_by('-criada_em') # Ordena pelas mais novas
 # 9. Atualize o contexto para incluir o formulário
