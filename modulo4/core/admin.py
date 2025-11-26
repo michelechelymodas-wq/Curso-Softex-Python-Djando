@@ -18,11 +18,11 @@ class TarefaAdmin(admin.ModelAdmin):
    ) 
 
 
-readonly_fields = ('criada_em',)
+    readonly_fields = ('criada_em',)
 
-@admin.display(description='Email do Usuário') # Define o título da coluna
-def get_user_email(self, obj):
-    return obj.user.email
+    @admin.display(description='Email do Usuário') # Define o título da coluna
+    def get_user_email(self, obj):
+        return obj.user.email
 
     
 
