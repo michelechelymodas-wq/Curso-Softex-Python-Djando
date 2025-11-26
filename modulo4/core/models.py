@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from projects.models import Project
 
 # Cada classe aqui é "traduzida" para uma tabela no banco de dados
 class Tarefa(models.Model):
@@ -16,6 +17,7 @@ class Tarefa(models.Model):
     # Em vez de "Tarefa object (1)", ele mostrará o título da tarefa.
     # Isso é EXTREMAMENTE útil no painel de administração.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tarefas')
 
     def __str__(self):
         return self.titulo
