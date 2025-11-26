@@ -25,5 +25,61 @@ python manage.py runserver
 http://127.0.0.1:8000
     #url para acessar o servidor
 
+
+
+criar super usuario    
 py manage.py createsuperuser
 para criar login e senha do super adm    
+
+
+
+criar novo projeto
+python manage.py startapp projects
+
+Passo 2: Registre o app
+Como fizemos na Apostila 1, precisamos "avisar" o settings.py sobre o novo app.
+Abra meuprojeto/settings.py e adicione projects à lista INSTALLED_APPS:
+Python
+# meuprojeto/settings.py
+INSTALLED_APPS = [
+...
+'core',
+'projects', # <-- ADICIONE ESTA LINHA
+
+outro Passo
+Agora, vamos criar o Model de Project e, em seguida, conectar nosso Model de Tarefa a ele.
+Passo 1: Crie o Model de Project
+Abra o novo arquivo projects/models.py e defina o Model:
+Python
+
+# projects/models.py
+from django.db import models
+from django.contrib.auth.models import User
+# Um Projeto também pertence a um usuário
+class Project(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=100)
+    def __str__(self):
+        return self.titulo
+
+Passo 2: Conecte a Tarefa ao Project
+Abra o arquivo antigo core/models.py. Vamos importar o Model que acabamos de criar e
+adicioná-lo à Tarefa.
+
+Assim como na Apostila 6, fizemos uma mudança estrutural (adicionamos um ForeignKey
+obrigatório, project).
+A forma mais limpa de lidar com isso em nosso tutorial é recomeçar o banco de dados.
+Passo 1: Limpe tudo
+1. Pare o servidor (Ctrl+C).
+2. Delete o arquivo db.sqlite3 na raiz do projeto.
+3. Delete a pasta core/migrations/ (ou tudo dentro dela, exceto __init__.py).
+4. Delete a pasta projects/migrations/ (ou tudo dentro dela, exceto __init__.py).
+Passo 2: Crie as novas migrações (para os dois apps)
+Agora, o Django vai ler os dois apps e criar os "planos de obra" em conjunto.
+Bash
+# Você pode especificar os apps que quer migrar
+python manage.py makemigrations core projects
+Você verá que ele criou 0001_initial.py em ambos os apps.
+
+
+
