@@ -1,0 +1,32 @@
+📝 Exercícios Práticos
+Exercício 1: Adicionar Campo ao Model
+Adicione um campo descricao (TextField) ao Model Tarefa:
+descricao = models.TextField(blank=True, null=True)
+1. Crie a migração
+2. Aplique no banco
+3. Adicione ao Serializer
+4. Teste criando uma tarefa com descrição no admin
+Exercício 2: Criar View de Contagem
+Crie uma view que retorne a contagem de tarefas:
+class ContagemTarefasAPIView(APIView):
+def get(self, request):
+total = Tarefa.objects.count()
+concluidas = Tarefa.objects.filter(concluida=True).count()
+pendentes = total - concluidas
+return Response({
+'total': total,
+'concluidas': concluidas,
+'pendentes': pendentes
+})
+Mapeie em /api/tarefas/contagem/.
+Exercício 3: Filtrar por Usuário
+Modifique o GET para retornar apenas tarefas de um usuário específico:
+def get(self, request):
+user_id = request.query_params.get('user_id')
+if user_id:
+tarefas = Tarefa.objects.filter(user_id=user_id)
+else:
+tarefas = Tarefa.objects.all()
+serializer = TarefaSerializer(tarefas, many=True)
+return Response(serializer.data)
+Teste: http://localhost:8000/api/tarefas/?user_id=1
