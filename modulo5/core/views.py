@@ -5,6 +5,41 @@ from rest_framework import status
 from .models import Tarefa
 from .serializers import TarefaSerializer
 
+
+def post(self, request, format=None):
+ """
+    Cria uma nova tarefa.
+
+    Args:
+        request.data: JSON com dados da tarefa
+    {
+    "titulo": "string",
+    "concluida": boolean (opcional, default=False)
+    }
+
+ Returns:
+    201 Created: Tarefa criada com sucesso
+    400 Bad Request: Dados inválidos
+ """
+ # 1. INSTANCIAR: Criar serializer com dados recebidos
+ serializer = TarefaSerializer(data=request.data)
+
+ # 2. VALIDAR: Checar se os dados são válidos
+    
+ # 3. SALVAR: Persistir no banco de dados
+    
+
+ # 4. RESPONDER: Retornar objeto criado + status 201
+return Responser:(
+        serializer.data,
+        status=status.HTTP_201_CREATED
+ )
+
+ # 5. ERRO: Retornar erros de validação + status 400
+return Response(
+    serializer.errors,
+    status=status.HTTP_400_BAD_REQUEST
+    
 class ListaTarefasAPIView(APIView):
        
     def get(self, request, format=None):
