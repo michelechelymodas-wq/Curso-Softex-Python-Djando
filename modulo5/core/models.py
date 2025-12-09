@@ -1,6 +1,29 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+
+
+
+
+PRIORIDADE_nivel = [
+    ('baixa', 'Baixa'),
+    ('media', 'Média'),
+    ('alta', 'Alta'),
+]
+
+class Tarefa(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    prioridade = models.CharField(
+        max_length=10,
+        nivel=PRIORIDADE_nivel,
+        default='media'
+    )
+
+    def __str__(self):
+        return self.nome
+
+
 class Tarefa(models.Model):
 
     user = models.ForeignKey(
